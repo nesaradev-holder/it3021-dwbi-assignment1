@@ -4,7 +4,17 @@ A self-directed DW/BI demonstration using synthetic retail-banking data. The pro
 
 ## Current stage
 
-Planning and project setup. The data model and pipeline will be developed incrementally and validated at each milestone.
+Project setup and the first small Python example are complete. The data model and pipeline will be developed incrementally and validated at each milestone.
+
+## First Python example
+
+[deposit_example.py](deposit_example.py) represents one fictional deposit as a Python dictionary and prints its amount. It is an introductory example; it does not connect to a database or generate a dataset.
+
+Run from the project root on Windows with Python 3 installed:
+
+    py -3 .\deposit_example.py
+
+Expected output: 2500.
 
 ## Proposed scope
 
