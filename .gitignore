@@ -1,0 +1,47 @@
+# Local assistant instructions, settings, and generation prompts
+AGENTS.md
+CODEX*.md
+.codex/
+.agents/
+*.prompt.txt
+
+# Working notes stay local; public documents are reviewed explicitly.
+/docs/*
+!/docs/retail-banking-analytics-proposal.md
+!/docs/retail-banking-analytics-proposal.pdf
+
+# Local credentials, account settings, and private keys
+.env
+.env.*
+!.env.example
+.aws/
+.ssh/
+.azure/
+credentials.json
+secrets.json
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Raw/generated data stays local until a specific synthetic sample is reviewed.
+/data/
+
+# Local IDE settings and database files
+.vscode/
+.idea/
+*.code-workspace
+*.user
+*.suo
+*.bak
+*.mdf
+*.ldf
+
+# Local runtime files and operating-system clutter
+.venv/
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+Thumbs.db
+Desktop.ini
