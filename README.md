@@ -8,13 +8,13 @@ Project setup and the first small Python example are complete. The data model an
 
 ## First Python example
 
-[deposit_example.py](deposit_example.py) represents two fictional deposits as a list of dictionaries and uses a loop to print their total amount. It is an introductory example; it does not connect to a database or generate a dataset.
+[deposit_example.py](deposit_example.py) represents two fictional deposits as a list of dictionaries and uses a loop and an if condition to print the total for the selected transaction branch. It is an introductory example; it does not connect to a database or generate a dataset.
 
 Run from the project root on Windows with Python 3 installed:
 
     py -3 .\deposit_example.py
 
-Expected output: 4500 (2500 + 2000).
+Expected output: 2000 for BR002; the BR001 deposit of 2500 is excluded. The selected branch is set in the loop condition.
 
 ## Proposed scope
 
