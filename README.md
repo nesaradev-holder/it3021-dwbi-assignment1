@@ -22,6 +22,8 @@ Expected output with the current settings:
 
 The total is 3000 + 750. Both the branch and year-month must match; the October deposits are excluded. Dates are known ISO-formatted text in this introductory example.
 
+Before calculating the total, the script checks transaction IDs across the CSV. A repeated transaction_id raises ValueError and stops the report.
+
 ## CSV source sample
 
 [data/deposits.sample.csv](data/deposits.sample.csv) contains four fictional deposits, with a header naming the five fields. Only this reviewed sample is allowed through the data-folder ignore rules. The script reads this file using Python's built-in csv module and converts amount text to whole numbers using int() before addition. Changing a deposit in the CSV changes the next report run. Run from the project root so the relative CSV path resolves.

@@ -3,6 +3,16 @@ import csv
 with open("data/deposits.sample.csv", newline="", encoding="utf-8") as source:
     deposits = list(csv.DictReader(source))
 
+seen_transaction_ids = set()
+
+for deposit in deposits:
+    transaction_id = deposit["transaction_id"]
+
+    if transaction_id in seen_transaction_ids:
+        raise ValueError(f"Duplicate transaction: {transaction_id}")
+
+    seen_transaction_ids.add(transaction_id)
+
 selected_branch = "BR002"
 selected_month = "2026-11"
 total = 0
