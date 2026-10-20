@@ -17,15 +17,18 @@ for deposit in deposits:
     if amount <= 0:
         raise ValueError(f"Deposit amount must be positive: {transaction_id}")
 
-selected_branch = "BR002"
-selected_month = "2026-11"
-total = 0
+totals = {}
 
 for deposit in deposits:
-    if (
-        deposit["transaction_branch_id"] == selected_branch
-        and deposit["transaction_date"][:7] == selected_month
-    ):
-        total = total + int(deposit["amount"])
+    group = (
+        deposit["transaction_branch_id"],
+        deposit["transaction_date"][:7],
+    )
 
-print(f"Branch: {selected_branch} | Month: {selected_month} | Total: {total}")
+    if group not in totals:
+        totals[group] = 0
+
+    totals[group] = totals[group] + int(deposit["amount"])
+
+for group in totals:
+    print(f"Branch: {group[0]} | Month: {group[1]} | Total: {totals[group]}")

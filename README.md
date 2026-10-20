@@ -8,19 +8,19 @@ Project setup and the first small Python example are complete. The data model an
 
 ## First Python example
 
-[deposit_example.py](deposit_example.py) reads four fictional deposits from a CSV into a list of dictionaries and uses a loop with branch and month conditions to print the selected total. It is an introductory example; it does not connect to a database or generate a dataset.
+[deposit_example.py](deposit_example.py) reads four fictional deposits from a CSV into a list of dictionaries and groups deposits by transaction branch and year-month, then prints each group total. It is an introductory example; it does not connect to a database or generate a dataset.
 
 Run from the project root on Windows with Python 3 installed:
 
     py -3 .\deposit_example.py
 
-Set selected_branch and selected_month above the loop to choose the report selection.
+Expected output with the current sample:
 
-Expected output with the current settings:
+    Branch: BR001 | Month: 2026-10 | Total: 2500
+    Branch: BR002 | Month: 2026-10 | Total: 2000
+    Branch: BR002 | Month: 2026-11 | Total: 4000
 
-    Branch: BR002 | Month: 2026-11 | Total: 3750
-
-The total is 3000 + 750. Both the branch and year-month must match; the October deposits are excluded. Dates are known ISO-formatted text in this introductory example.
+Each group uses a (transaction branch, year-month) tuple as its dictionary key. New groups start at zero; later deposits add to the existing group total. The November total is 3000 + 1000. Each CSV row still represents one deposit. Dates are known ISO-formatted text in this introductory example.
 
 Before calculating the total, the script checks transaction IDs across the CSV. A repeated transaction_id raises ValueError and stops the report. Each amount in this deposit-only, whole-number sample must be greater than zero; zero or negative amounts also stop the report with ValueError.
 
