@@ -14,7 +14,13 @@ Run from the project root on Windows with Python 3 installed:
 
     py -3 .\deposit_example.py
 
-Expected output: 3500 (3000 + 500) for BR002 in 2026-11. Both the branch and year-month must match; the October deposits are excluded. Dates are known ISO-formatted text in this introductory example.
+Set selected_branch and selected_month above the loop to choose the report selection.
+
+Expected output with the current settings:
+
+    Branch: BR002 | Month: 2026-11 | Total: 3500
+
+The total is 3000 + 500. Both the branch and year-month must match; the October deposits are excluded. Dates are known ISO-formatted text in this introductory example.
 
 ## Proposed scope
 

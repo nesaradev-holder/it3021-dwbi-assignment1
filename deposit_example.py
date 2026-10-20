@@ -28,14 +28,15 @@ deposits = [
         "amount": 500,
     },
 ]
-
+selected_branch = "BR002"
+selected_month = "2026-11"
 total = 0
 
 for deposit in deposits:
     if (
-        deposit["transaction_branch_id"] == "BR002"
-        and deposit["transaction_date"][:7] == "2026-11"
+        deposit["transaction_branch_id"] == selected_branch
+        and deposit["transaction_date"][:7] == selected_month
     ):
         total = total + deposit["amount"]
 
-print(total)
+print(f"Branch: {selected_branch} | Month: {selected_month} | Total: {total}")
