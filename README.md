@@ -8,7 +8,7 @@ Project setup and the first small Python example are complete. The data model an
 
 ## First Python example
 
-[deposit_example.py](deposit_example.py) represents four fictional deposits as a list of dictionaries and uses a loop with branch and month conditions to print the selected total. It is an introductory example; it does not connect to a database or generate a dataset.
+[deposit_example.py](deposit_example.py) reads four fictional deposits from a CSV into a list of dictionaries and uses a loop with branch and month conditions to print the selected total. It is an introductory example; it does not connect to a database or generate a dataset.
 
 Run from the project root on Windows with Python 3 installed:
 
@@ -18,9 +18,13 @@ Set selected_branch and selected_month above the loop to choose the report selec
 
 Expected output with the current settings:
 
-    Branch: BR002 | Month: 2026-11 | Total: 3500
+    Branch: BR002 | Month: 2026-11 | Total: 3750
 
-The total is 3000 + 500. Both the branch and year-month must match; the October deposits are excluded. Dates are known ISO-formatted text in this introductory example.
+The total is 3000 + 750. Both the branch and year-month must match; the October deposits are excluded. Dates are known ISO-formatted text in this introductory example.
+
+## CSV source sample
+
+[data/deposits.sample.csv](data/deposits.sample.csv) contains four fictional deposits, with a header naming the five fields. Only this reviewed sample is allowed through the data-folder ignore rules. The script reads this file using Python's built-in csv module and converts amount text to whole numbers using int() before addition. Changing a deposit in the CSV changes the next report run. Run from the project root so the relative CSV path resolves.
 
 ## Proposed scope
 

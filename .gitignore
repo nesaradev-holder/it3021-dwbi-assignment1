@@ -25,7 +25,8 @@ secrets.json
 *.p12
 
 # Raw/generated data stays local until a specific synthetic sample is reviewed.
-/data/
+/data/*
+!/data/deposits.sample.csv
 
 # Local IDE settings and database files
 .vscode/
