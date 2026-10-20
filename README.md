@@ -8,13 +8,13 @@ Project setup and the first small Python example are complete. The data model an
 
 ## First Python example
 
-[deposit_example.py](deposit_example.py) represents three fictional deposits as a list of dictionaries and uses a loop with branch and month conditions to print the selected total. It is an introductory example; it does not connect to a database or generate a dataset.
+[deposit_example.py](deposit_example.py) represents four fictional deposits as a list of dictionaries and uses a loop with branch and month conditions to print the selected total. It is an introductory example; it does not connect to a database or generate a dataset.
 
 Run from the project root on Windows with Python 3 installed:
 
     py -3 .\deposit_example.py
 
-Expected output: 3000 for BR002 in 2026-11. Both the branch and year-month must match; the October deposits are excluded. Dates are known ISO-formatted text in this introductory example.
+Expected output: 3500 (3000 + 500) for BR002 in 2026-11. Both the branch and year-month must match; the October deposits are excluded. Dates are known ISO-formatted text in this introductory example.
 
 ## Proposed scope
 

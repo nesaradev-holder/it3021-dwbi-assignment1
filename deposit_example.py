@@ -20,6 +20,13 @@ deposits = [
         "transaction_date": "2026-11-05",
         "amount": 3000,
     },
+    {
+        "transaction_id": "2005583032",
+        "account_id": "98849932",
+        "transaction_branch_id": "BR002",
+        "transaction_date": "2026-11-20",
+        "amount": 500,
+    },
 ]
 
 total = 0
