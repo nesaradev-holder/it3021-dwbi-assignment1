@@ -22,7 +22,7 @@ Expected output with the current settings:
 
 The total is 3000 + 750. Both the branch and year-month must match; the October deposits are excluded. Dates are known ISO-formatted text in this introductory example.
 
-Before calculating the total, the script checks transaction IDs across the CSV. A repeated transaction_id raises ValueError and stops the report.
+Before calculating the total, the script checks transaction IDs across the CSV. A repeated transaction_id raises ValueError and stops the report. Each amount in this deposit-only, whole-number sample must be greater than zero; zero or negative amounts also stop the report with ValueError.
 
 ## CSV source sample
 

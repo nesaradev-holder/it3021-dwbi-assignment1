@@ -13,6 +13,10 @@ for deposit in deposits:
 
     seen_transaction_ids.add(transaction_id)
 
+    amount = int(deposit["amount"])
+    if amount <= 0:
+        raise ValueError(f"Deposit amount must be positive: {transaction_id}")
+
 selected_branch = "BR002"
 selected_month = "2026-11"
 total = 0
