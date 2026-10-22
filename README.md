@@ -4,7 +4,7 @@ A self-directed DW/BI demonstration using synthetic retail-banking data. The pro
 
 ## Current stage
 
-Project setup and the first small Python example are complete. The data model and pipeline will be developed incrementally and validated at each milestone.
+The CSV reporting prototype is working, and the BankingOLTP source database has been created in SQL Server. Banking tables and the warehouse pipeline will be developed incrementally and validated at each milestone.
 
 ## First Python example
 
@@ -27,6 +27,12 @@ Before calculating the total, the script checks transaction IDs across the CSV. 
 ## CSV source sample
 
 [data/deposits.sample.csv](data/deposits.sample.csv) contains four fictional deposits, with a header naming the five fields. Only this reviewed sample is allowed through the data-folder ignore rules. The script reads this file using Python's built-in csv module and converts amount text to whole numbers using int() before addition. Changing a deposit in the CSV changes the next report run. Run from the project root so the relative CSV path resolves.
+
+## SQL source database setup
+
+[sql/001_create_source_database.sql](sql/001_create_source_database.sql) creates the BankingOLTP source database if it is absent. Running it again leaves the existing database unchanged.
+
+Open the script in SSMS connected to the local SQL Server instance, then press F5. Refresh Databases in Object Explorer to see BankingOLTP. The banking tables and source data will be added in later steps.
 
 ## Proposed scope
 

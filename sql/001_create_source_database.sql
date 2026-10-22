@@ -1,0 +1,2 @@
+IF DB_ID('BankingOLTP') IS NULL
+	CREATE DATABASE BankingOLTP;
