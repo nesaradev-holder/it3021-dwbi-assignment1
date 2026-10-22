@@ -4,7 +4,7 @@ A self-directed DW/BI demonstration using synthetic retail-banking data. The pro
 
 ## Current stage
 
-The CSV reporting prototype is working. The BankingOLTP source database now contains dbo.Branch with two fictional sample branches and an empty dbo.Customer table. The remaining operational model, source data and warehouse pipeline will be developed incrementally and validated at each milestone.
+The CSV reporting prototype is working. The BankingOLTP source database now contains dbo.Branch with two fictional sample branches and dbo.Customer with one fictional sample customer. The remaining operational model, source data and warehouse pipeline will be developed incrementally and validated at each milestone.
 
 ## First Python example
 
@@ -38,7 +38,9 @@ Then run [sql/002_create_branch_table.sql](sql/002_create_branch_table.sql). It 
 
 Run [sql/003_insert_sample_branches.sql](sql/003_insert_sample_branches.sql) to add BR001 (Demo Piliyandala) and BR002 (Demo Maharagama). Each insert checks whether its ID already exists, so a rerun skips existing branches and preserves their stored values. These are fictional demonstration records.
 
-Run [sql/004_create_customer_table.sql](sql/004_create_customer_table.sql) to create dbo.Customer if absent. It has customer_id (VARCHAR(10), primary key), customer_name and city (NVARCHAR(100)), all NOT NULL. Here city represents the customer's residence. The table currently has no rows. Rerunning the script preserves an existing table.
+Run [sql/004_create_customer_table.sql](sql/004_create_customer_table.sql) to create dbo.Customer if absent. It has customer_id (VARCHAR(10), primary key), customer_name and city (NVARCHAR(100)), all NOT NULL. Here city represents the customer's residence. Rerunning the script preserves an existing table.
+
+Run [sql/005_insert_sample_customers.sql](sql/005_insert_sample_customers.sql) to add C001 (Demo Customer One, Piliyandala). The insert checks whether customer_id already exists, so rerunning it skips an existing customer and preserves its stored values. This is a fictional demonstration record.
 
 ## Proposed scope
 
