@@ -4,7 +4,7 @@ A self-directed DW/BI demonstration using synthetic retail-banking data. The pro
 
 ## Current stage
 
-The CSV reporting prototype is working. The BankingOLTP source database now contains dbo.Branch with two fictional sample branches. The remaining operational model, source data and warehouse pipeline will be developed incrementally and validated at each milestone.
+The CSV reporting prototype is working. The BankingOLTP source database now contains dbo.Branch with two fictional sample branches and an empty dbo.Customer table. The remaining operational model, source data and warehouse pipeline will be developed incrementally and validated at each milestone.
 
 ## First Python example
 
@@ -37,6 +37,8 @@ Open the script in SSMS connected to the local SQL Server instance, then press F
 Then run [sql/002_create_branch_table.sql](sql/002_create_branch_table.sql). It selects BankingOLTP and creates dbo.Branch if absent, with branch_id (VARCHAR(10), primary key), branch_name and city (NVARCHAR(100)). All three columns are NOT NULL. Rerunning this script preserves an existing table.
 
 Run [sql/003_insert_sample_branches.sql](sql/003_insert_sample_branches.sql) to add BR001 (Demo Piliyandala) and BR002 (Demo Maharagama). Each insert checks whether its ID already exists, so a rerun skips existing branches and preserves their stored values. These are fictional demonstration records.
+
+Run [sql/004_create_customer_table.sql](sql/004_create_customer_table.sql) to create dbo.Customer if absent. It has customer_id (VARCHAR(10), primary key), customer_name and city (NVARCHAR(100)), all NOT NULL. Here city represents the customer's residence. The table currently has no rows. Rerunning the script preserves an existing table.
 
 ## Proposed scope
 
