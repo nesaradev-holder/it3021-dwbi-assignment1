@@ -4,7 +4,7 @@ A self-directed DW/BI demonstration using synthetic retail-banking data. The pro
 
 ## Current stage
 
-The CSV reporting prototype is working, and the BankingOLTP source database has been created in SQL Server. Banking tables and the warehouse pipeline will be developed incrementally and validated at each milestone.
+The CSV reporting prototype is working. The BankingOLTP source database now contains an empty dbo.Branch table. The remaining operational model, source data and warehouse pipeline will be developed incrementally and validated at each milestone.
 
 ## First Python example
 
@@ -32,7 +32,9 @@ Before calculating the total, the script checks transaction IDs across the CSV. 
 
 [sql/001_create_source_database.sql](sql/001_create_source_database.sql) creates the BankingOLTP source database if it is absent. Running it again leaves the existing database unchanged.
 
-Open the script in SSMS connected to the local SQL Server instance, then press F5. Refresh Databases in Object Explorer to see BankingOLTP. The banking tables and source data will be added in later steps.
+Open the script in SSMS connected to the local SQL Server instance, then press F5. Refresh Databases in Object Explorer to see BankingOLTP.
+
+Then run [sql/002_create_branch_table.sql](sql/002_create_branch_table.sql). It selects BankingOLTP and creates dbo.Branch if absent, with branch_id (VARCHAR(10), primary key), branch_name and city (NVARCHAR(100)). All three columns are NOT NULL. The table currently has no rows; branch records will be added next. Rerunning this script preserves an existing table.
 
 ## Proposed scope
 
