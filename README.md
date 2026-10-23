@@ -4,7 +4,7 @@ A self-directed DW/BI demonstration using synthetic retail-banking data. The pro
 
 ## Current stage
 
-The CSV reporting prototype is working. The BankingOLTP source database now contains dbo.Branch with two fictional sample branches and dbo.Customer with one fictional sample customer. The remaining operational model, source data and warehouse pipeline will be developed incrementally and validated at each milestone.
+The CSV reporting prototype is working. The BankingOLTP source database now contains dbo.Branch with two fictional sample branches, dbo.Customer with one fictional sample customer, and an empty dbo.Account table linked to both. The remaining operational model, source data and warehouse pipeline will be developed incrementally and validated at each milestone.
 
 ## First Python example
 
@@ -41,6 +41,8 @@ Run [sql/003_insert_sample_branches.sql](sql/003_insert_sample_branches.sql) to 
 Run [sql/004_create_customer_table.sql](sql/004_create_customer_table.sql) to create dbo.Customer if absent. It has customer_id (VARCHAR(10), primary key), customer_name and city (NVARCHAR(100)), all NOT NULL. Here city represents the customer's residence. Rerunning the script preserves an existing table.
 
 Run [sql/005_insert_sample_customers.sql](sql/005_insert_sample_customers.sql) to add C001 (Demo Customer One, Piliyandala). The insert checks whether customer_id already exists, so rerunning it skips an existing customer and preserves its stored values. This is a fictional demonstration record.
+
+Run [sql/006_create_account_table.sql](sql/006_create_account_table.sql) to create dbo.Account if absent. It has account_id (primary key), branch_id and customer_id, all VARCHAR(10) and NOT NULL. Foreign keys require branch_id to reference dbo.Branch and customer_id to reference dbo.Customer. For this initial prototype, each account has one customer and one home branch; the table currently has no rows. Rerunning the script preserves an existing table.
 
 ## Proposed scope
 
