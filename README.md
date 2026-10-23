@@ -4,7 +4,7 @@ A self-directed DW/BI demonstration using synthetic retail-banking data. The pro
 
 ## Current stage
 
-The CSV reporting prototype is working. The BankingOLTP source database now contains dbo.Branch with two fictional sample branches, dbo.Customer with one fictional sample customer, and an empty dbo.Account table linked to both. The remaining operational model, source data and warehouse pipeline will be developed incrementally and validated at each milestone.
+The CSV reporting prototype is working. The BankingOLTP source database now contains dbo.Branch with two fictional sample branches, dbo.Customer with one fictional sample customer, and dbo.Account with one fictional account linked to both. The remaining operational model, source data and warehouse pipeline will be developed incrementally and validated at each milestone.
 
 ## First Python example
 
@@ -42,7 +42,9 @@ Run [sql/004_create_customer_table.sql](sql/004_create_customer_table.sql) to cr
 
 Run [sql/005_insert_sample_customers.sql](sql/005_insert_sample_customers.sql) to add C001 (Demo Customer One, Piliyandala). The insert checks whether customer_id already exists, so rerunning it skips an existing customer and preserves its stored values. This is a fictional demonstration record.
 
-Run [sql/006_create_account_table.sql](sql/006_create_account_table.sql) to create dbo.Account if absent. It has account_id (primary key), branch_id and customer_id, all VARCHAR(10) and NOT NULL. Foreign keys require branch_id to reference dbo.Branch and customer_id to reference dbo.Customer. For this initial prototype, each account has one customer and one home branch; the table currently has no rows. Rerunning the script preserves an existing table.
+Run [sql/006_create_account_table.sql](sql/006_create_account_table.sql) to create dbo.Account if absent. It has account_id (primary key), branch_id and customer_id, all VARCHAR(10) and NOT NULL. Foreign keys require branch_id to reference dbo.Branch and customer_id to reference dbo.Customer. For this initial prototype, each account has one customer and one home branch. Rerunning the script preserves an existing table.
+
+Run [sql/007_insert_sample_accounts.sql](sql/007_insert_sample_accounts.sql) to add fictional account 98849932, owned by C001 with home branch BR001. The insert skips an existing account_id and preserves its stored values. This is the account used in the deposit CSV; an individual deposit may be handled at a different transaction branch.
 
 ## Proposed scope
 
