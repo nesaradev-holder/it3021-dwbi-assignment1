@@ -46,6 +46,8 @@ Run [sql/006_create_account_table.sql](sql/006_create_account_table.sql) to crea
 
 Run [sql/007_insert_sample_accounts.sql](sql/007_insert_sample_accounts.sql) to add fictional account 98849932, owned by C001 with home branch BR001. The insert skips an existing account_id and preserves its stored values. This is the account used in the deposit CSV; an individual deposit may be handled at a different transaction branch.
 
+Run [sql/008_query_account_details.sql](sql/008_query_account_details.sql) to read account IDs with customer names and home branch names. It uses INNER JOIN on customer_id and branch_id and does not change stored data. With the current sample, it returns 98849932 / Demo Customer One / Demo Piliyandala.
+
 ## Proposed scope
 
 - Customer, Account, Branch and Transaction entities.
