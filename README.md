@@ -4,7 +4,7 @@ A self-directed DW/BI demonstration using synthetic retail-banking data. The pro
 
 ## Current stage
 
-The CSV reporting prototype is working. The BankingOLTP source database now contains dbo.Branch with two fictional sample branches, dbo.Customer with one fictional sample customer, and dbo.Account with one fictional account linked to both. The remaining operational model, source data and warehouse pipeline will be developed incrementally and validated at each milestone.
+The CSV reporting prototype is working. The BankingOLTP source database now contains dbo.Branch with two fictional sample branches, dbo.Customer with one fictional sample customer, dbo.Account with one fictional account linked to both, and dbo.Deposit with the four fictional deposit events from the CSV fixture. The remaining operational model, source data and warehouse pipeline will be developed incrementally and validated at each milestone.
 
 ## First Python example
 
@@ -47,6 +47,10 @@ Run [sql/006_create_account_table.sql](sql/006_create_account_table.sql) to crea
 Run [sql/007_insert_sample_accounts.sql](sql/007_insert_sample_accounts.sql) to add fictional account 98849932, owned by C001 with home branch BR001. The insert skips an existing account_id and preserves its stored values. This is the account used in the deposit CSV; an individual deposit may be handled at a different transaction branch.
 
 Run [sql/008_query_account_details.sql](sql/008_query_account_details.sql) to read account IDs with customer names and home branch names. It uses INNER JOIN on customer_id and branch_id and does not change stored data. With the current sample, it returns 98849932 / Demo Customer One / Demo Piliyandala.
+
+Run [sql/009_create_deposit_table.sql](sql/009_create_deposit_table.sql) to create dbo.Deposit if absent, at one row per deposit. The required columns are transaction_id (VARCHAR(10), primary key), account_id and transaction_branch_id (VARCHAR(10), foreign keys to Account and Branch), transaction_date (DATE), and amount (DECIMAL(18,2), checked to be greater than zero). The handling branch can differ from the account home branch. This is the deposit-only source prototype; the CSV remains its demonstration fixture, and final warehouse source allocation is pending. Rerunning the script preserves an existing table.
+
+Run [sql/010_insert_sample_deposits.sql](sql/010_insert_sample_deposits.sql) to insert the four reviewed CSV fixture deposits into SQL Server. Each insert checks transaction_id first, so rerunning preserves existing records. The SQL rows match the CSV exactly: 4 deposits totalling 8500.00, grouped as BR001 October 2500.00, BR002 October 2000.00 and BR002 November 4000.00. These are the same events represented in two formats, not independent transaction feeds to combine.
 
 ## Proposed scope
 
