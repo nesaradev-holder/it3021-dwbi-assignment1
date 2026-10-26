@@ -9,6 +9,9 @@ CODEX*.md
 /docs/*
 !/docs/retail-banking-analytics-proposal.md
 !/docs/retail-banking-analytics-proposal.pdf
+!/docs/DEMO_DATASET.md
+!/docs/WAREHOUSE_HANDOVER.md
+!/docs/WAREHOUSE_HANDOVER.pdf
 
 # Local credentials, account settings, and private keys
 .env

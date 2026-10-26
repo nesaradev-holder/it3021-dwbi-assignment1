@@ -1,0 +1,402 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/26/2026 2:07:28 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="localhost"
+  DTS:CreatorName="Banking Demo"
+  DTS:Description="Synthetic banking warehouse demonstration; SQL Server 2022 SSIS runtime."
+  DTS:DTSID="{C4CA36BE-B00E-4165-ABEC-45D44280EF2D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.1000.6"
+  DTS:LocaleID="1033"
+  DTS:MaxConcurrentExecutables="1"
+  DTS:ObjectName="CompletionUpdates"
+  DTS:ProtectionLevel="0"
+  DTS:VersionGUID="{E958008B-4676-40DD-A1FF-93680A6DC3B3}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Completion update file]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{006CCC9F-4723-4E16-B77E-6BA2A92C6AD2}"
+      DTS:ObjectName="Completion update file">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::DataDirectory] + "\\completion_updates.csv"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:Unicode="True"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x0022_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="data\generated\completion_updates.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="100"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="transaction_id"
+              DTS:DTSID="{68D74032-DB91-4BAE-97C2-307F4F27AA43}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="complete_time"
+              DTS:DTSID="{DC892DB3-A025-4CB8-940F-4AB8382F3F65}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Warehouse]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F615FF76-381A-4C0F-B50D-108226633280}"
+      DTS:ObjectName="Warehouse">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=BankingDW;Provider=MSOLEDBSQL;Integrated Security=SSPI;Use Encryption for Data=True;Trust Server Certificate=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{ECC5A658-8E47-4CF3-B4E8-909612D9FC0E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DataDirectory">
+      <DTS:VariableValue
+        DTS:DataType="8">data\generated</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Apply completions and record rejects"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{11482A99-7DCE-4A82-80B8-E30C7A24A56A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Apply completions and record rejects"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F615FF76-381A-4C0F-B50D-108226633280}"
+          SQLTask:SqlStatementSource="EXEC etl.ApplyCompletions;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Extract completion CSV"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{B54C771F-873E-4777-9C0D-B0D95B18F151}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Extract completion CSV"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Extract completion CSV\Flat File Source"
+              componentClassID="Microsoft.FlatFileSource"
+              contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Source"
+              localeId="1033"
+              name="Flat File Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether zero-length columns are treated as null."
+                  name="RetainNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Extract completion CSV\Flat File Source.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Completion update file]"
+                  connectionManagerRefId="Package.ConnectionManagers[Completion update file]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output]"
+                  name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output].Columns[transaction_id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[transaction_id]"
+                      length="100"
+                      lineageId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output].Columns[transaction_id]"
+                      name="transaction_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output].Columns[complete_time]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[complete_time]"
+                      length="50"
+                      lineageId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output].Columns[complete_time]"
+                      name="complete_time"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[transaction_id]"
+                      dataType="wstr"
+                      length="100"
+                      name="transaction_id" />
+                    <externalMetadataColumn
+                      refId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[complete_time]"
+                      dataType="wstr"
+                      length="50"
+                      name="complete_time" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Error Output]"
+                  isErrorOut="true"
+                  name="Flat File Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      dataType="nText"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
+                    <outputColumn
+                      refId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Extract completion CSV\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[stg].[Completion]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Extract completion CSV\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Warehouse]"
+                  connectionManagerRefId="Package.ConnectionManagers[Warehouse]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Extract completion CSV\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Extract completion CSV\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[transaction_id]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="transaction_id"
+                      externalMetadataColumnId="Package\Extract completion CSV\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[transaction_id]"
+                      lineageId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output].Columns[transaction_id]" />
+                    <inputColumn
+                      refId="Package\Extract completion CSV\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[complete_time]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="complete_time"
+                      externalMetadataColumnId="Package\Extract completion CSV\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[complete_time]"
+                      lineageId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output].Columns[complete_time]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Extract completion CSV\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[transaction_id]"
+                      dataType="wstr"
+                      length="100"
+                      name="transaction_id" />
+                    <externalMetadataColumn
+                      refId="Package\Extract completion CSV\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[complete_time]"
+                      dataType="wstr"
+                      length="50"
+                      name="complete_time" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Extract completion CSV\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Extract completion CSV\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Extract completion CSV\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Extract completion CSV\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Extract completion CSV\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Extract completion CSV\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Extract completion CSV.Paths[Flat File Source Output]"
+              endId="Package\Extract completion CSV\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Flat File Source Output"
+              startId="Package\Extract completion CSV\Flat File Source.Outputs[Flat File Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Prepare completion staging"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{18F5B2DF-E71F-4637-9EC3-6DE78D76660E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Prepare completion staging"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F615FF76-381A-4C0F-B50D-108226633280}"
+          SQLTask:SqlStatementSource="EXEC etl.PrepareCompletion;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[{13EC0826-17DD-45CE-97B0-4424407838CB\}]"
+      DTS:CreationName=""
+      DTS:DTSID="{13EC0826-17DD-45CE-97B0-4424407838CB}"
+      DTS:From="Package\Prepare completion staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="{13EC0826-17DD-45CE-97B0-4424407838CB}"
+      DTS:To="Package\Extract completion CSV" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[{548EDE7D-5673-481F-AAB8-4521A686E924\}]"
+      DTS:CreationName=""
+      DTS:DTSID="{548EDE7D-5673-481F-AAB8-4521A686E924}"
+      DTS:From="Package\Extract completion CSV"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="{548EDE7D-5673-481F-AAB8-4521A686E924}"
+      DTS:To="Package\Apply completions and record rejects" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>
